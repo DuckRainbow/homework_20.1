@@ -40,6 +40,9 @@ class Product(models.Model):
     updated_at = models.DateTimeField(
         verbose_name="Дата последнего изменения", blank=True, null=True
     )
+    manufactured_at = models.DateTimeField(
+        verbose_name="Дата производства продукта", blank=True, null=True
+    )
 
     def __str__(self):
         # Строковое отображение объекта
