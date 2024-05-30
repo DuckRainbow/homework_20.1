@@ -44,8 +44,7 @@ class Command(BaseCommand):
             category_for_create.append(
                 Category(
                     Category(pk=category["pk"], name=category["fields"]["title"],
-                             description=category["fields"]["description"], )
-                )
+                             description=category["fields"]["description"], )))
 
             # Создаем объекты в базе с помощью метода bulk_create()
             Category.objects.bulk_create(category_for_create)
