@@ -10,11 +10,11 @@
                         <img src="{{ product.image | media_filter }}" class="rounded float-start">
                         <div class="card-body">
                             <p class="card-text">{{ product.title }}</p>
+                            <p class="card-text">{{ product.description|truncatechars:100 }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a class="btn btn-primary" href="{% url 'catalog:products_detail' product.pk %}" role="button">Посмотреть</a>
                                 </div>
-                                <small class="text-body-secondary">9 mins</small>
                             </div>
                         </div>
                     </div>
