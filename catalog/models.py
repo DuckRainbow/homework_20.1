@@ -19,11 +19,24 @@ class Category(models.Model):
 # Create your models here.
 class Product(models.Model):
     title = models.CharField(
-        max_length=50, verbose_name="Наименование", blank=True, null=True
+        max_length=50,
+        verbose_name="Наименование",
+        blank=True,
+        null=True,
+        help_text='Введите наименование продукта.'
     )
-    description = models.TextField(verbose_name="Описание", blank=True, null=True)
+    description = models.TextField(
+        verbose_name="Описание",
+        blank=True,
+        null=True,
+        help_text='Введите описание.'
+    )
     image = models.ImageField(
-        upload_to="catalog/image", blank=True, null=True, verbose_name="Изображение"
+        upload_to="catalog/image",
+        blank=True,
+        null=True,
+        verbose_name="Изображение продукта",
+        help_text='Добавьте изображение продукта.'
     )
     category = models.ForeignKey(
         Category,
@@ -31,14 +44,28 @@ class Product(models.Model):
         verbose_name="Категория",
         null=True,
         blank=True,
-        related_name="products",
+        related_name="catalog",
+        help_text='Выберите категорию.'
     )
     price = models.IntegerField(verbose_name="Цена за покупку", blank=True, null=True)
     created_at = models.DateTimeField(
-        verbose_name="Дата создания", blank=True, null=True
+        verbose_name="Дата создания",
+        blank=True,
+        null=True
     )
     updated_at = models.DateTimeField(
-        verbose_name="Дата последнего изменения", blank=True, null=True
+        verbose_name="Дата последнего изменения",
+        blank=True,
+        null=True
+    )
+    views_counter = models.PositiveIntegerField(
+        verbose_name='Счетчик просмотров',
+        help_text='Укажите количество просмотров',
+        default=0
+    )
+    published = models.BooleanField(
+        verbose_name='Опубликовано',
+        default=True
     )
 
     def __str__(self):
