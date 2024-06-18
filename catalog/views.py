@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from pytils.translit import slugify
 
 from catalog.models import Article, Product
 
@@ -56,6 +57,13 @@ class ArticleCreateView(CreateView):
     model = Article
     fields = ('title', 'slug', 'content', 'preview', 'published')
     success_url = reverse_lazy('catalog:articles_list')
+
+    def form_valid(self, form):
+        if form.is_valid():
+            new_article = form.save()
+            new_article.slug = slugify(new_article.title)
+            new_article.save()
+        return super().form_valid(form)
 
 
 class ArticleUpdateView(UpdateView):
