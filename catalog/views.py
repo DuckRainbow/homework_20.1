@@ -32,9 +32,6 @@ class ProductUpdateView(UpdateView):
     form_class = ProductForm
     success_url = reverse_lazy('catalog:products_list')
 
-    def get_success_url(self):
-        return reverse('catalog:products_detail', args=[self.kwargs('pk')])
-
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         ProductFormSet = inlineformset_factory(Product, Version, VersionForm, extra=1)

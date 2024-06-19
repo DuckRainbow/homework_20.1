@@ -15,17 +15,32 @@ class FormStyleMixin:
 
 
 class ProductForm(FormStyleMixin, forms.ModelForm):
+    banned_words = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
+
     class Meta:
         model = Product
         fields = ('title', 'description', 'image', 'category', 'price')
 
     def clean_title(self):
-        cleaned_data = self.cleaned_data.get('title')
+        list_words = []
+        cleaned_data = self.cleaned_data['title']
+        for word in self.banned_words:
+            if word in cleaned_data:
+                list_words.append(word)
+        result_banned_words = ", ".join(list_words)
+        if len(result_banned_words) != 0:
+            raise forms.ValidationError(f'Запрещено использовать в названии слова: {result_banned_words}')
+        return cleaned_data
 
-        if cleaned_data in ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция',
-                            'радар']:
-            raise forms.ValidationError('Ошибка, связанная с названием продукта')
-
+    def clean_description(self):
+        list_words = []
+        cleaned_data = self.cleaned_data['description']
+        for word in self.banned_words:
+            if word in cleaned_data:
+                list_words.append(word)
+        result_banned_words = ", ".join(list_words)
+        if len(result_banned_words) != 0:
+            raise forms.ValidationError(f'Запрещено использовать в описании слова: {result_banned_words}')
         return cleaned_data
 
 
