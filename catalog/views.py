@@ -1,7 +1,6 @@
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from pytils.translit import slugify
 
 from catalog.forms import ProductForm, VersionForm
 
@@ -42,6 +41,17 @@ class ProductUpdateView(UpdateView):
             context_data['formset'] = ProductFormSet(instance=self.object)
         return context_data
 
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context["formset"]
+        self.object = form.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+        else:
+            return self.form_invalid(form)
+        return super().form_valid(form)
+
 
 class ProductDeleteView(DeleteView):
     model = Product
@@ -66,13 +76,6 @@ class ArticleCreateView(CreateView):
     model = Article
     fields = ('title', 'slug', 'content', 'preview', 'published')
     success_url = reverse_lazy('catalog:articles_list')
-
-    def form_valid(self, form):
-        if form.is_valid():
-            new_article = form.save()
-            new_article.slug = slugify(new_article.title)
-            new_article.save()
-        return super().form_valid(form)
 
 
 class ArticleUpdateView(UpdateView):
