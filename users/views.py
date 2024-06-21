@@ -6,6 +6,6 @@ from users.models import User
 
 
 class UserCreateView(CreateView):
-        model = User
-        form_class = UserRegisterForm
-        success_url = reverse_lazy('users:login')
+    model = User
+    form_class = UserRegisterForm
+    success_url = reverse_lazy('users:login')
