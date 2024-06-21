@@ -47,7 +47,7 @@ class Product(models.Model):
         related_name="catalog",
         help_text='Выберите категорию.'
     )
-    price = models.IntegerField(verbose_name="Цена за покупку", blank=True, null=True)
+    price = models.PositiveIntegerField(verbose_name="Цена за покупку", blank=True, null=True)
     created_at = models.DateTimeField(
         verbose_name="Дата создания",
         blank=True,
