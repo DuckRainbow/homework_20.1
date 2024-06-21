@@ -5,7 +5,7 @@ from catalog.models import Category, Product
 from config.settings import FIXTURES_ROOT
 
 filename_category = "categories.json"
-filename_product = "products.json"
+filename_product = "catalog.json"
 file_path = os.path.join(FIXTURES_ROOT, 'catalog')
 
 

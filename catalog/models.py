@@ -19,11 +19,24 @@ class Category(models.Model):
 # Create your models here.
 class Product(models.Model):
     title = models.CharField(
-        max_length=50, verbose_name="Наименование", blank=True, null=True
+        max_length=50,
+        verbose_name="Наименование",
+        blank=True,
+        null=True,
+        help_text='Введите наименование продукта.'
     )
-    description = models.TextField(verbose_name="Описание", blank=True, null=True)
+    description = models.TextField(
+        verbose_name="Описание",
+        blank=True,
+        null=True,
+        help_text='Введите описание.'
+    )
     image = models.ImageField(
-        upload_to="catalog/image", blank=True, null=True, verbose_name="Изображение"
+        upload_to="catalog/image",
+        blank=True,
+        null=True,
+        verbose_name="Изображение продукта",
+        help_text='Добавьте изображение продукта.'
     )
     category = models.ForeignKey(
         Category,
@@ -31,14 +44,24 @@ class Product(models.Model):
         verbose_name="Категория",
         null=True,
         blank=True,
-        related_name="products",
+        related_name="catalog",
+        help_text='Выберите категорию.'
     )
     price = models.PositiveIntegerField(verbose_name="Цена за покупку", blank=True, null=True)
     created_at = models.DateTimeField(
-        verbose_name="Дата создания", auto_now_add=True
+        verbose_name="Дата создания",
+        blank=True,
+        null=True
     )
     updated_at = models.DateTimeField(
-        verbose_name="Дата последнего изменения", auto_now=True
+        verbose_name="Дата последнего изменения",
+        blank=True,
+        null=True
+    )
+    views_counter = models.PositiveIntegerField(
+        verbose_name='Счетчик просмотров',
+        help_text='Укажите количество просмотров',
+        default=0
     )
 
     def __str__(self):
@@ -50,3 +73,55 @@ class Product(models.Model):
     class Meta:
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
+
+
+class Article(models.Model):
+    title = models.CharField(
+        max_length=50,
+        verbose_name="Заголовок",
+        blank=True,
+        null=True,
+        help_text='Введите заголовок статьи.'
+    )
+    slug = models.CharField(
+        max_length=100,
+        verbose_name="slug",
+        blank=True,
+        null=True,
+        help_text='Введите URL статьи.'
+    )
+    content = models.TextField(
+        verbose_name="Содержимое",
+        blank=True,
+        null=True,
+        help_text='Введите статью.'
+    )
+    preview = models.ImageField(
+        upload_to="catalog/image",
+        blank=True,
+        null=True,
+        verbose_name="Превью статьи",
+        help_text='Добавьте изображение.'
+    )
+    created_at = models.DateTimeField(
+        verbose_name="Дата создания",
+        blank=True,
+        null=True
+    )
+    published = models.BooleanField(
+        verbose_name="Опубликована",
+        blank=True
+    )
+    views_counter = models.PositiveIntegerField(
+        verbose_name='Счетчик просмотров',
+        help_text='Укажите количество просмотров',
+        default=0
+    )
+
+    def __str__(self):
+        # Строковое отображение объекта
+        return f"{self.title}"
+
+    class Meta:
+        verbose_name = "статья"
+        verbose_name_plural = "статьи"
