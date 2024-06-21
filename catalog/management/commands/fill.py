@@ -43,7 +43,7 @@ class Command(BaseCommand):
         # Обходим все значения категорий из фиктсуры для получения информации об одном объекте
         for category in Command.json_read_categories():
             category_for_create.append(
-                    Category(pk=category["pk"], title=category["fields"]["title"],
+                    Category(pk=category["pk"], name=category["fields"]["title"],
                              description=category["fields"]["description"], ))
 
 
@@ -59,8 +59,8 @@ class Command(BaseCommand):
                         image=product["fields"]["image"],
                         category=Category.objects.get(pk=product['fields']['category']),
                         price=product["fields"]["price"],
-                        created_at=product["fields"]["created_at"],
-                        updated_at=product["fields"]["updated_at"],
+                        create_at=product["fields"]["create_at"],
+                        update_at=product["fields"]["update_at"],
                     )
                 )
 
