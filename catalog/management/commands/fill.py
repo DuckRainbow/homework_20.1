@@ -6,7 +6,8 @@ from config.settings import FIXTURES_ROOT
 
 filename_category = "categories.json"
 filename_product = "products.json"
-file_path = FIXTURES_ROOT
+file_path = os.path.join(FIXTURES_ROOT, 'catalog')
+
 
 
 class Command(BaseCommand):
@@ -44,6 +45,7 @@ class Command(BaseCommand):
             category_for_create.append(
                     Category(pk=category["pk"], title=category["fields"]["title"],
                              description=category["fields"]["description"], ))
+
 
             # Создаем объекты в базе с помощью метода bulk_create()
             Category.objects.bulk_create(category_for_create)
