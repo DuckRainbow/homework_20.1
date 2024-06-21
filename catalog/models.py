@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 
 class Category(models.Model):
@@ -125,3 +126,39 @@ class Article(models.Model):
     class Meta:
         verbose_name = "статья"
         verbose_name_plural = "статьи"
+
+
+class Version(models.Model):
+    product = models.ForeignKey(
+        Product,
+        related_name='versions',
+        on_delete=models.SET_NULL,
+        verbose_name="Продукты данной версии",
+        null=True,
+        blank=True,
+        help_text='Продукты данной версии:'
+    )
+    counter = models.PositiveIntegerField(
+        verbose_name='Номер версии',
+        help_text='Укажите номер версии.',
+        default=1
+    )
+    title = models.CharField(
+        max_length=50,
+        verbose_name="Название версии",
+        blank=True,
+        null=True,
+        help_text='Введите название версии.'
+    )
+    currented = models.BooleanField(
+        verbose_name="Текущая версия",
+        blank=True
+    )
+
+    def str(self):
+        # Строковое отображение объекта
+        return f"{self.title}"
+
+    class Meta:
+        verbose_name = "версия"
+        verbose_name_plural = "версии"
