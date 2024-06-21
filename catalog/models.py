@@ -131,6 +131,7 @@ class Article(models.Model):
 class Version(models.Model):
     product = models.ForeignKey(
         Product,
+        related_name='versions',
         on_delete=models.SET_NULL,
         verbose_name="Продукты данной версии",
         null=True,
