@@ -13,7 +13,7 @@ class User(AbstractUser):
         help_text='Добавьте ваш аватар'
     )
     phone = models.CharField(
-        max_length=35,
+        max_length=30,
         verbose_name='Телефон',
         blank=True,
         null=True,
