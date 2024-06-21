@@ -33,12 +33,12 @@ class Product(models.Model):
         blank=True,
         related_name="products",
     )
-    price = models.IntegerField(verbose_name="Цена за покупку", blank=True, null=True)
+    price = models.PositiveIntegerField(verbose_name="Цена за покупку", blank=True, null=True)
     created_at = models.DateTimeField(
-        verbose_name="Дата создания", blank=True, null=True
+        verbose_name="Дата создания", auto_now_add=True
     )
     updated_at = models.DateTimeField(
-        verbose_name="Дата последнего изменения", blank=True, null=True
+        verbose_name="Дата последнего изменения", auto_now=True
     )
 
     def __str__(self):
