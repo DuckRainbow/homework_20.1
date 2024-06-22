@@ -11,9 +11,7 @@
                 <button type="submit" class="btn btn-primary">
                     Войти
                 </button>
-                <button type="submit" class="btn btn-primary">
-                    Восстановить пароль
-                </button>
+                <a href="{% url 'users:reset_password' %}" class="text-white">Восстановить пароль</a>
             </div>
         </div>
     </form>
