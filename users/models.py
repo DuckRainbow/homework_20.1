@@ -27,6 +27,13 @@ class User(AbstractUser):
         help_text='Введите страну, откуда вы'
     )
 
+    token = models.CharField(
+        max_length=100,
+        verbose_name='Token',
+        blank=True,
+        null=True,
+    )
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
