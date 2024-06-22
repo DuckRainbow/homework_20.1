@@ -42,12 +42,12 @@ def email_verification(request, token):
 
 class ResetPassword(TemplateView):
     def get(self, request):
-        return render(request, 'user/reset_password.html')
+        return render(request, 'users/reset_password.html')
 
     def post(self, request, *args, **kwargs):
         email = request.POST.get('email')
         user = get_object_or_404(User, email=email)
-        new_password = secrets.token_hex(16)
+        new_password = secrets.token_hex(8)
         user.set_password(new_password)
         user.save()
         send_mail(
