@@ -41,6 +41,17 @@ class ProductUpdateView(UpdateView):
             context_data['formset'] = ProductFormSet(instance=self.object)
         return context_data
 
+    def form_valid(self, form):
+        context = self.get_context_data()
+        formset = context["formset"]
+        self.object = form.save()
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+        else:
+            return self.form_invalid(form)
+        return super().form_valid(form)
+
 
 class ProductDeleteView(DeleteView):
     model = Product
