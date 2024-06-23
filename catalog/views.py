@@ -35,7 +35,7 @@ class ProductCreateView(CreateView, LoginRequiredMixin):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(UpdateView, LoginRequiredMixin):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:products_list')
@@ -61,7 +61,7 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(DeleteView, LoginRequiredMixin):
     model = Product
     success_url = reverse_lazy('catalog:products_list')
 
@@ -80,13 +80,13 @@ class ArticleDetailView(DetailView):
         return self.object
 
 
-class ArticleCreateView(CreateView):
+class ArticleCreateView(CreateView, LoginRequiredMixin):
     model = Article
     fields = ('title', 'slug', 'content', 'preview', 'published')
     success_url = reverse_lazy('catalog:articles_list')
 
 
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(UpdateView, LoginRequiredMixin):
     model = Article
     fields = ('title', 'slug', 'content', 'preview', 'published')
     success_url = reverse_lazy('catalog:articles_list')
@@ -95,6 +95,6 @@ class ArticleUpdateView(UpdateView):
         return reverse('catalog:articles_detail', args=[self.kwargs.get('pk')])
 
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(DeleteView, LoginRequiredMixin):
     model = Article
     success_url = reverse_lazy('catalog:articles_list')
