@@ -80,13 +80,13 @@ class ArticleDetailView(DetailView):
         return self.object
 
 
-class ArticleCreateView(CreateView, LoginRequiredMixin):
+class ArticleCreateView(CreateView):
     model = Article
     fields = ('title', 'slug', 'content', 'preview', 'published')
     success_url = reverse_lazy('catalog:articles_list')
 
 
-class ArticleUpdateView(UpdateView, LoginRequiredMixin):
+class ArticleUpdateView(UpdateView):
     model = Article
     fields = ('title', 'slug', 'content', 'preview', 'published')
     success_url = reverse_lazy('catalog:articles_list')
@@ -95,6 +95,6 @@ class ArticleUpdateView(UpdateView, LoginRequiredMixin):
         return reverse('catalog:articles_detail', args=[self.kwargs.get('pk')])
 
 
-class ArticleDeleteView(DeleteView, LoginRequiredMixin):
+class ArticleDeleteView(DeleteView):
     model = Article
     success_url = reverse_lazy('catalog:articles_list')
