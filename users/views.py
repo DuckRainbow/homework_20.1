@@ -1,9 +1,9 @@
 import secrets
 
 from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 
 from users.forms import UserRegisterForm
 from users.models import User
@@ -36,4 +36,24 @@ class UserCreateView(CreateView):
 def email_verification(request, token):
     user = get_object_or_404(User, token=token)
     user.is_active = True
+    user.save()
     return redirect(reverse('users:login'))
+
+
+class ResetPassword(TemplateView):
+    def get(self, request):
+        return render(request, 'users/reset_password.html')
+
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get('email')
+        user = get_object_or_404(User, email=email)
+        new_password = secrets.token_hex(8)
+        user.set_password(new_password)
+        user.save()
+        send_mail(
+            subject='Изменение пароля',
+            message=f'Твой новый пароль: {new_password}',
+            from_email=EMAIL_HOST_USER,
+            recipient_list=[user.email],
+        )
+        return redirect(reverse('users:login'))

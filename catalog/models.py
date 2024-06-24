@@ -1,6 +1,8 @@
 from django.db import models
 from django import forms
 
+from users.models import User
+
 
 class Category(models.Model):
     title = models.CharField(
@@ -63,6 +65,14 @@ class Product(models.Model):
         verbose_name='Счетчик просмотров',
         help_text='Укажите количество просмотров',
         default=0
+    )
+    creator = models.ForeignKey(
+        User,
+        verbose_name='Создатель',
+        help_text='Укажите создателя карточки продукта',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
     )
 
     def __str__(self):
