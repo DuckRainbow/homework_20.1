@@ -19,7 +19,6 @@ class Category(models.Model):
         verbose_name_plural = "категории"
 
 
-# Create your models here.
 class Product(models.Model):
     title = models.CharField(
         max_length=50,
@@ -74,6 +73,11 @@ class Product(models.Model):
         null=True,
         on_delete=models.SET_NULL,
     )
+    published = models.BooleanField(
+        verbose_name="Опубликована",
+        blank=True,
+        default=False,
+    )
 
     def __str__(self):
         # Строковое отображение объекта
@@ -84,6 +88,11 @@ class Product(models.Model):
     class Meta:
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
+        permissions = [
+            ('can_unpublish_product', 'Can unpublish a product'),
+            ('can_edit_description', 'Can edit the description of any product'),
+            ('can_change_category', 'Can change the category of any product'),
+        ]
 
 
 class Article(models.Model):
