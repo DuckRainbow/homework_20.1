@@ -89,9 +89,9 @@ class Product(models.Model):
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
         permissions = [
-            ('can_unpublish_product', 'Can unpublish a product'),
-            ('can_edit_description', 'Can edit the description of any product'),
-            ('can_change_category', 'Can change the category of any product'),
+            ("can_unpublish_product", "Can unpublish a product"),
+            ("can_edit_description", "Can edit the description of any product"),
+            ("can_change_category", "Can change the category of any product"),
         ]
 
 
